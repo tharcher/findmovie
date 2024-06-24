@@ -12,7 +12,7 @@ export function Button({ title, className, variant = 'dark', onClick, text }: Pr
     return (
         <button
             className={classNames([
-                'bg-evergreen-light md:px-4 md:py-3 p-2  rounded-lg shadow font-medium mt-3 md:text-lg text-sm sm:text-base flex items-center justify-center',
+                'bg-evergreen-light md:px-4 p-2  rounded-lg shadow font-medium mt-3 md:text-lg text-sm sm:text-base flex items-center justify-center',
                 variant === 'dark' && 'bg-evergreen-light text-white',
                 variant === 'light' && 'bg-white border-2 border-evergreen-light text-evergreen-light',
                 className,
