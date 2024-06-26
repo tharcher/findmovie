@@ -2,16 +2,16 @@ import { z } from "zod";
 
 const movieSchema = z.object({
     title: z.string(),
-    isbn: z.string(),
-    pageCount: z.number(),
-    publishedDate: z.object({
+    releaseDate: z.object({
         $date: z.date(),
     }),
+    duration: z.number(),    
     thumbnailUrl: z.string(),
     shortDescription: z.string().optional(),
     longDescription: z.string().optional(),
     status: z.string(),
-    authors: z.array(z.string()),
+    directors: z.array(z.string()),
+    cast: z.array(z.string()),
     categories: z.array(z.string()),
 })
 
