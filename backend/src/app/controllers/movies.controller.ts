@@ -1,7 +1,8 @@
 import { MovieDto } from "../dto/movieDto";
+import { MoviesUseCase } from "../useCases/movies.usecase";
 
 class MoviesController {
-    constructor() {
+    constructor(private readonly moviesUseCase: MoviesUseCase) {
 
     }
 
@@ -9,22 +10,17 @@ class MoviesController {
         const body: MovieDto = httpRequest.body;
 
         try {
-            if (!body) {
-                return {
-                    status: 400,
-                    message: "Missing body",
-                };
-            }
+           const response = await this.moviesUseCase.createMovie(body);
             return {
                 status: 201,
                 message: "Movie created",
+                data: response,
             };
         } catch (error: any) {
             return {
                 status: 400,
                 message: error.message,
             }
-
         }
     }
 }

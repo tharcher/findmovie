@@ -6,6 +6,7 @@ interface HttpRequest {
 }
 
 interface HttpResponse {
-    status?: number;
-    message? : string;
+    status: number;
+    message : string;
+    data?: any;
 }
