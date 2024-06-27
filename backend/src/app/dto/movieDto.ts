@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const movieSchema = z.object({
     title: z.string(),
-    releaseDate: z.object({
+    release: z.object({
         $date: z.date(),
     }),
     duration: z.number(),    
