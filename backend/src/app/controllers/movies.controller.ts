@@ -23,10 +23,10 @@ class MoviesController {
     }
 
     async search(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const dto: MovieDto = httpRequest.query;
+        const find: string = httpRequest.query.search;
 
         try {
-            const response = await this.moviesUseCase.searchMovie(dto);
+            const response = await this.moviesUseCase.searchMovie(find);
             return {
                 status: 200,
                 message: "Movie found",

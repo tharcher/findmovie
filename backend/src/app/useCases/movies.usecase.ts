@@ -1,5 +1,15 @@
+import { generateEmbeddings } from "../../infra/services/openai/generateEmbeddings";
+import { searchEmbeddings } from "../../infra/services/openai/search";
 import { MovieDto } from "../dto/movieDto";
 import { MoviesRepository } from "../repository/movies.repository";
+
+export type AIResponse = {
+    title: string;
+    directors: string;
+    categories: string;
+    cast: string;
+    longDescription: string;
+}
 
 class MoviesUseCase {
     private moviesRepository: MoviesRepository;
@@ -8,15 +18,85 @@ class MoviesUseCase {
     }
 
     async createMovie(dto: MovieDto) {
-        this.moviesRepository.create(dto);
+        const dataEmbedding = {
+            title: dto.title,
+            categories: dto.categories,
+            directors: dto.directors,
+            cast: dto.cast,
+            longDescription: dto.longDescription,
+        };
+
+        const generateEmbedding = await generateEmbeddings(
+            JSON.stringify(dataEmbedding)
+        );
+
+        return this.moviesRepository.create({
+            ...dto,
+            embedding: generateEmbedding,
+        });
     }
 
-    async searchMovie(dto: MovieDto) {
-        this.moviesRepository.search(dto);
+    async searchMovie(find: string) {
+        const generateEmbedding = await generateEmbeddings(find);
+        const searchResponse: AIResponse = await searchEmbeddings(find);
+        const matchMovies = this.matchMovies(searchResponse);
+        
+        return this.moviesRepository.search(find, generateEmbedding, searchResponse);
     }
 
     async updateMovie(dto: MovieDto, id: string) {
-        this.moviesRepository.update(dto, id);
+        const dataEmbedding = {
+            title: dto.title,
+            categories: dto.categories,
+            directors: dto.directors,
+            cast: dto.cast,
+            longDescription: dto.longDescription,
+        };
+
+        const generateEmbedding = await generateEmbeddings(
+            JSON.stringify(dataEmbedding)
+        );
+
+        return this.moviesRepository.update({
+            ...dto,
+            embedding: generateEmbedding,
+        }, id);
+    }
+
+    private matchMovies(search: AIResponse): Record<string, any> {
+        const matchMovies = { $match: {} }
+
+        if (search.title) {
+            matchMovies.$match = {
+                title: search.title,
+            };
+        }
+
+        if(search.directors) {
+            matchMovies.$match = {
+                directors: search.directors,
+            };
+        }
+
+        if (search.categories) {
+            matchMovies.$match = {
+                categories: search.categories,
+            };
+        }
+
+        if (search.cast) {
+            matchMovies.$match = {
+                cast: search.cast,
+            };
+        }
+
+        if (search.longDescription) {
+            matchMovies.$match = {
+                longDescription: search.longDescription,
+            };
+        }
+
+        return matchMovies;
     }
 }
 
