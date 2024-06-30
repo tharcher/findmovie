@@ -1,10 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import { Header } from "../../components/Header/Header";
 import { Title } from "../../components/Title/Title";
 import { Card } from "../../components/Card/Card";
 import { Input } from "../../components/Input/Input";
+import { searchMovies } from "../../services/movies";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const genderMovies = [
     'Ação',
@@ -18,6 +20,7 @@ const genderMovies = [
 
 export function Home() {
     const [selectedGender, setSelectedGender] = useState<string[]>([]);
+    const { movies, handleSetMovies } = useContext(MoviesContext);
 
     const handleSelected = useCallback((title: string) => {
         if (selectedGender.includes(title)) {
@@ -28,6 +31,14 @@ export function Home() {
         }
 
     }, [selectedGender]);
+
+    const handleSubmit = useCallback(
+        async (value: string) => {
+            const response = await searchMovies(value);    
+            handleSetMovies(response);
+        },
+        [handleSetMovies],
+    );
 
     return (
         <div className="mb-6">
@@ -40,7 +51,7 @@ export function Home() {
                             key={index}
                             title={movie}
                             variant={selectedGender.includes(movie) ? 'dark' : 'light'}
-                            onClick={() => handleSelected(movie)} 
+                            onClick={() => handleSelected(movie)}
                             className="hover:scale-125 transform transition-transform duration-300 ease-in-out"
                         />
                     ))}
@@ -49,11 +60,21 @@ export function Home() {
                     <p className="text-evergreen font-medium text-2xl">
                         Qual é o seu gênero preferido de filmes para receber recomendações?
                     </p>
-                    <Input placeholder="Eu gostaria de assistir..." />
+                    <Input placeholder="Eu gostaria de assistir..." onKeyDown={(e: any) => {
+                        if (e.key === "Enter") {
+                            handleSubmit(e.target.value);
+                        }
+                    }} />
                 </div>
-                <Title title="Filmes recomendados?" className="my-5" />
-                <Card id="123" />
+                <Title title="Filmes recomendados" className="my-5" />
+                <div className="grid md:grid-cols-4 grid-cols-1 gap-16px">
+                    {movies.map(movie => {
+                        return (                            
+                            <Card id={movie._id} movie={movie} />
+                        );
+                    })}
+                </div>
             </Container>
         </div>
-    )
+    );
 }

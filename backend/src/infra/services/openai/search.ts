@@ -36,8 +36,8 @@ export async function searchEmbeddings(input: string): Promise<AIResponse> {
         });
 
         console.log("Searching...");
-        const output = JSON.parse(response.choices[0].message.content!)
-        console.log("Result: ", output);
+        const output = JSON.parse(response.choices[0].message.content!);
+        console.log("Result OPENAI: ", output);
         return output;
     } catch (error: any) {
         throw new HttpException(500, error.message);

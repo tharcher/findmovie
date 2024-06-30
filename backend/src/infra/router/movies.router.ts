@@ -8,6 +8,6 @@ export const MovieRoutes = (router: Router) => {
     const moviesUseCase = new MoviesUseCase(new MoviesRepositoryMongoose());
     const moviesController = new MoviesController(moviesUseCase);
     router.post('/movies', routerAdapter(moviesController, 'create'));
-    router.get("/movies", routerAdapter(moviesController, 'search'));
-    router.put("/movies/:id", routerAdapter(moviesController, 'update'));
+    router.get('/movies', routerAdapter(moviesController, 'find'));
+    router.put('/movies/:id', routerAdapter(moviesController, 'update'));
 }

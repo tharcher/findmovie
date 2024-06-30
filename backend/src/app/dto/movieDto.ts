@@ -13,7 +13,7 @@ const movieSchema = z.object({
     directors: z.array(z.string()),
     cast: z.array(z.string()),
     categories: z.array(z.string()),
-    embedding: z.array(z.number().optional()),
+    embedding: z.array(z.number()).optional(),
 });
 
 type Movie = z.infer<typeof movieSchema>;

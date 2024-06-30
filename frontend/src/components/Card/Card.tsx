@@ -2,12 +2,16 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { Tag } from "../Tag/Tag";
+import { Movie } from "../../contexts/moviesContext";
 
 type Props = {
     id: string;
+    movie: Movie;
 }
 
-export function Card({ id }: Props) {
+export function Card({ id, movie }: Props) {
+    console.log("Card - movie: ", movie);
+
     const navigate = useNavigate()
     const handleSelectedMovie = useCallback(() => {
         navigate(`/${id}`);
@@ -16,20 +20,22 @@ export function Card({ id }: Props) {
         <div className="p-2 gap-3 grid grid-cols-3 shadow-lg rounded-lg border border-gray-100 max-w-lg">
             <div className="col-span-1">
                 <img
-                    src="https://br.web.img3.acsta.net/r_1920_1080/medias/nmedia/18/87/81/80/19969754.jpg"
+                    src={movie?.thumbnailUrl}
                     alt=""
                     className="object-center w-full h-full rounded-lg"
                 />
             </div>
             <div className="col-span-2 flex flex-col justify-between">
                 <div>
-                    <p className="font-bold text-2xl text-evergreen">Kill Bill</p>
-                    <p className="font-light text-sm text-gray-500 mb-2">Direção: Quentin Tarantino</p>
-                    <Tag title="vingança" className="mb-3" />
-                    <p className="text-justify">
-                        <strong>Sinopse: </strong>
-                        Traída e quase morta, a assassina de elite acorda de um coma após cinco anos. Ela quer vingança contra seu inimigo e seus comparsas assassinos.
-                    </p>
+                    <p className="font-bold text-xl text-evergreen">{movie.title}</p>
+                    <p className="font-light text-sm text-gray-500 mb-2">Direção: {movie?.directors.join(', ')}</p>
+                    <Tag title={movie?.categories.join(', ')}className="mb-3 text-sm" />
+                    {movie.shortDescription && (
+                        <p className="text-justify text-sm">
+                            <strong>Sinopse: </strong>
+                            {movie.shortDescription}
+                        </p>
+                    )}
                 </div>
                 <div className="flex justify-center">
                     <Button

@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 import { MovieDto } from "../../app/dto/movieDto";
 import { MoviesRepository } from "../../app/repository/movies.repository";
 import { MovieEntity } from "../../domain/entity/movie.entity";
+import { title } from "process";
 
 const moviesSchema = new mongoose.Schema({
     title: String,
-    release: { $date: String },
+    release: Date,
     duration: Number,
     thumbnailUrl: String,
     shortDescription: String,
@@ -14,21 +15,20 @@ const moviesSchema = new mongoose.Schema({
     directors: [String],
     cast: [String],
     categories: [String],
-    embedding: [Number],
 });
 
 const Movies = mongoose.model('movies', moviesSchema);
 
 class MoviesRepositoryMongoose implements MoviesRepository {
     create(dto: MovieDto) {
-        const movies = new Movies(dto);
-        return movies.save();
+        const movie = new Movies(dto);
+        return movie.save();
     }
 
-    async search(
-        find: string,
+    async find(
+        search: string,
         embedding: number[],
-        matchMovies: any,
+        matchMovies: Record<string, any>,
     ): Promise<MovieEntity[] | null> {
         const response = await Movies.aggregate([
             {
@@ -36,20 +36,20 @@ class MoviesRepositoryMongoose implements MoviesRepository {
                     index: 'embedding',
                     path: 'embedding',
                     queryVector: embedding,
-                    numCandidates: 20,
+                    numCandidates: 150,
                     limit: 10,
                 },
-            },
+            }, 
             {
                 $match: {
                     $or: [
                         { title: new RegExp(matchMovies.title, 'i') },
                         { directors: new RegExp(matchMovies.directors, 'i') },
                         { categories: new RegExp(matchMovies.categories, 'i') },
-                        { longDescription: new RegExp(matchMovies.longDescription, 'i') },
                         { cast: new RegExp(matchMovies.cast, 'i') },
+                        { longDescription: new RegExp(matchMovies.longDescription, 'i') },                        
                     ],
-                }
+                },
             },
             {
                 $project: {
@@ -68,7 +68,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
                 },
             },
         ]);
-
+        
         return response;
     }
 

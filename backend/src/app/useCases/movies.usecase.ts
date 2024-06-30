@@ -36,12 +36,12 @@ class MoviesUseCase {
         });
     }
 
-    async searchMovie(find: string) {
-        const generateEmbedding = await generateEmbeddings(find);
-        const searchResponse: AIResponse = await searchEmbeddings(find);
+    async searchMovies(search: string) {        
+        const generateEmbedding = await generateEmbeddings(search);
+        const searchResponse: AIResponse = await searchEmbeddings(search);
         const matchMovies = this.matchMovies(searchResponse);
         
-        return this.moviesRepository.search(find, generateEmbedding, searchResponse);
+        return this.moviesRepository.find(search, generateEmbedding, searchResponse);
     }
 
     async updateMovie(dto: MovieDto, id: string) {
@@ -95,7 +95,7 @@ class MoviesUseCase {
                 longDescription: search.longDescription,
             };
         }
-
+        
         return matchMovies;
     }
 }
