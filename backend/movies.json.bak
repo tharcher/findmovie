@@ -1,7 +1,7 @@
 [
     {
         "title": "A Origem",
-        "releaseDate": { "$date": "2010-07-16T00:00:00.000-0700" },
+        "release": { "$date": "2010-07-16T00:00:00.000-0700" },
         "duration": 148,
         "thumbnailUrl": "https://example.com/inception.jpg",
         "shortDescription": "Inception é um thriller de ficção científica sobre um ladrão que entra nos sonhos de outras pessoas para roubar segredos.",
@@ -13,7 +13,7 @@
     },
     {
         "title": "Matrix",
-        "releaseDate": { "$date": "1999-03-31T00:00:00.000-0700" },
+        "release": { "$date": "1999-03-31T00:00:00.000-0700" },
         "duration": 136,
         "thumbnailUrl": "https://example.com/thematrix.jpg",
         "shortDescription": "Matrix é um filme de ação e ficção científica que explora a natureza da realidade e a consciência humana.",
@@ -25,7 +25,7 @@
     },
     {
         "title": "O Poderoso Chefão",
-        "releaseDate": { "$date": "1972-03-24T00:00:00.000-0700" },
+        "release": { "$date": "1972-03-24T00:00:00.000-0700" },
         "duration": 175,
         "thumbnailUrl": "https://example.com/thegodfather.jpg",
         "shortDescription": "O Poderoso Chefão é um clássico drama policial sobre a poderosa família criminosa ítalo-americana Corleone.",
@@ -37,7 +37,7 @@
     },
     {
         "title": "Pulp Fiction: Tempo de Violência",
-        "releaseDate": { "$date": "1994-10-14T00:00:00.000-0700" },
+        "release": { "$date": "1994-10-14T00:00:00.000-0700" },
         "duration": 154,
         "thumbnailUrl": "https://example.com/pulpfiction.jpg",
         "shortDescription": "Pulp Fiction é um filme de comédia criminal neo-noir com histórias interligadas de crime e redenção.",
@@ -49,7 +49,7 @@
     },
     {
         "title": "Um Sonho de Liberdade",
-        "releaseDate": { "$date": "1994-09-23T00:00:00.000-0700" },
+        "release": { "$date": "1994-09-23T00:00:00.000-0700" },
         "duration": 142,
         "thumbnailUrl": "https://example.com/shawshank.jpg",
         "shortDescription": "Um Sonho de Liberdade é um drama sobre um homem injustamente preso por assassinato e sua busca pela liberdade.",
@@ -61,7 +61,7 @@
     },
     {
         "title": "Batman: O Cavaleiro das Trevas",
-        "releaseDate": { "$date": "2008-07-18T00:00:00.000-0700" },
+        "release": { "$date": "2008-07-18T00:00:00.000-0700" },
         "duration": 152,
         "thumbnailUrl": "https://example.com/thedarkknight.jpg",
         "shortDescription": "Batman: O Cavaleiro das Trevas é um filme de super-herói que coloca Batman contra o criminoso conhecido como Coringa.",
@@ -73,7 +73,7 @@
     },
     {
         "title": "Forrest Gump - O Contador de Histórias",
-        "releaseDate": { "$date": "1994-07-06T00:00:00.000-0700" },
+        "release": { "$date": "1994-07-06T00:00:00.000-0700" },
         "duration": 142,
         "thumbnailUrl": "https://example.com/forrestgump.jpg",
         "shortDescription": "Forrest Gump é um filme de drama sobre um homem de bom coração e ingênuo que testemunha e influencia inadvertidamente vários eventos históricos.",
@@ -85,7 +85,7 @@
     },
     {
         "title": "O Senhor dos Anéis: A Sociedade do Anel",
-        "releaseDate": { "$date": "2001-12-19T00:00:00.000-0700" },
+        "release": { "$date": "2001-12-19T00:00:00.000-0700" },
         "duration": 178,
         "thumbnailUrl": "https://example.com/lotr_fellowship.jpg",
         "shortDescription": "Um filme de fantasia épica sobre a jornada de um jovem hobbit para destruir um anel poderoso.",
@@ -97,7 +97,7 @@
     },
     {
         "title": "Star Wars: Episódio IV - Uma Nova Esperança",
-        "releaseDate": { "$date": "1977-05-25T00:00:00.000-0700" },
+        "release": { "$date": "1977-05-25T00:00:00.000-0700" },
         "duration": 121,
         "thumbnailUrl": "https://example.com/starwars_newhope.jpg",
         "shortDescription": "Um jovem fazendeiro se torna um herói em uma batalha contra um império maligno.",
@@ -109,7 +109,7 @@
     },
     {
         "title": "Jurassic Park: O Parque dos Dinossauros",
-        "releaseDate": { "$date": "1993-06-11T00:00:00.000-0700" },
+        "release": { "$date": "1993-06-11T00:00:00.000-0700" },
         "duration": 127,
         "thumbnailUrl": "https://example.com/jurassicpark.jpg",
         "shortDescription": "Um filme de aventura de ficção científica sobre um parque temático com dinossauros clonados.",
@@ -121,7 +121,7 @@
     },
     {
         "title": "Titanic",
-        "releaseDate": { "$date": "1997-12-19T00:00:00.000-0700" },
+        "release": { "$date": "1997-12-19T00:00:00.000-0700" },
         "duration": 195,
         "thumbnailUrl": "https://example.com/titanic.jpg",
         "shortDescription": "Um drama romântico ambientado contra a viagem inaugural malograda do R.M.S. Titanic.",
@@ -133,7 +133,7 @@
     },
     {
         "title": "O Rei Leão",
-        "releaseDate": { "$date": "1994-06-15T00:00:00.000-0700" },
+        "release": { "$date": "1994-06-15T00:00:00.000-0700" },
         "duration": 88,
         "thumbnailUrl": "https://example.com/lionking.jpg",
         "shortDescription": "Um drama musical animado sobre um jovem leão que deve recuperar seu reino.",
@@ -145,7 +145,7 @@
     },
     {
         "title": "De Volta para o Futuro",
-        "releaseDate": { "$date": "1985-07-03T00:00:00.000-0700" },
+        "release": { "$date": "1985-07-03T00:00:00.000-0700" },
         "duration": 116,
         "thumbnailUrl": "https://example.com/backtothefuture.jpg",
         "shortDescription": "Uma aventura de ficção científica sobre um adolescente que viaja no tempo.",
@@ -157,7 +157,7 @@
     },
     {
         "title": "Gladiador",
-        "releaseDate": { "$date": "2000-05-05T00:00:00.000-0700" },
+        "release": { "$date": "2000-05-05T00:00:00.000-0700" },
         "duration": 155,
         "thumbnailUrl": "https://example.com/gladiator.jpg",
         "shortDescription": "Um drama histórico épico sobre um general romano traído que busca vingança.",
@@ -169,7 +169,7 @@
     },
     {
         "title": "Avatar",
-        "releaseDate": { "$date": "2009-12-18T00:00:00.000-0700" },
+        "release": { "$date": "2009-12-18T00:00:00.000-0700" },
         "duration": 162,
         "thumbnailUrl": "https://example.com/avatar.jpg",
         "shortDescription": "Um filme de ficção científica sobre humanos explorando um planeta distante e os conflitos que surgem.",
@@ -181,7 +181,7 @@
     },
     {
         "title": "Os Vingadores",
-        "releaseDate": { "$date": "2012-05-04T00:00:00.000-0700" },
+        "release": { "$date": "2012-05-04T00:00:00.000-0700" },
         "duration": 143,
         "thumbnailUrl": "https://example.com/theavengers.jpg",
         "shortDescription": "Um filme de super-herói sobre uma equipe de heróis que deve salvar o mundo de uma invasão alienígena.",
@@ -193,7 +193,7 @@
     },
     {
         "title": "Clube da Luta",
-        "releaseDate": { "$date": "1999-10-15T00:00:00.000-0700" },
+        "release": { "$date": "1999-10-15T00:00:00.000-0700" },
         "duration": 139,
         "thumbnailUrl": "https://example.com/fightclub.jpg",
         "shortDescription": "Um thriller psicológico sobre um trabalhador de escritório insone e um vendedor de sabão que formam um clube de luta subterrâneo.",
@@ -205,7 +205,7 @@
     },
     {
         "title": "Bastardos Inglórios",
-        "releaseDate": { "$date": "2009-08-21T00:00:00.000-0700" },
+        "release": { "$date": "2009-08-21T00:00:00.000-0700" },
         "duration": 153,
         "thumbnailUrl": "https://example.com/inglouriousbasterds.jpg",
         "shortDescription": "Um filme de guerra sobre um grupo de soldados judeu-americanos que planejam assassinar líderes nazistas.",
@@ -217,7 +217,7 @@
     },
 	{
         "title": "Um Lugar Chamado Notting Hill",
-        "releaseDate": { "$date": "1999-05-28T00:00:00.000-0700" },
+        "release": { "$date": "1999-05-28T00:00:00.000-0700" },
         "duration": 124,
         "thumbnailUrl": "https://example.com/nottinghill.jpg",
         "shortDescription": "Uma comédia romântica sobre um dono de livraria que se apaixona por uma famosa atriz americana.",
@@ -229,7 +229,7 @@
     },
     {
         "title": "Simplesmente Amor",
-        "releaseDate": { "$date": "2003-11-14T00:00:00.000-0700" },
+        "release": { "$date": "2003-11-14T00:00:00.000-0700" },
         "duration": 135,
         "thumbnailUrl": "https://example.com/loveactually.jpg",
         "shortDescription": "Uma comédia romântica que acompanha a vida de oito casais muito diferentes lidando com suas vidas amorosas.",
@@ -241,7 +241,7 @@
     },
     {
         "title": "Harry e Sally: Feitos Um para o Outro",
-        "releaseDate": { "$date": "1989-07-21T00:00:00.000-0700" },
+        "release": { "$date": "1989-07-21T00:00:00.000-0700" },
         "duration": 96,
         "thumbnailUrl": "https://example.com/whenharrymetsally.jpg",
         "shortDescription": "Uma comédia romântica sobre a difícil, porém emocionante, relação entre Harry e Sally ao longo dos anos.",
@@ -253,7 +253,7 @@
     },
     {
         "title": "A Proposta",
-        "releaseDate": { "$date": "2009-06-19T00:00:00.000-0700" },
+        "release": { "$date": "2009-06-19T00:00:00.000-0700" },
         "duration": 108,
         "thumbnailUrl": "https://example.com/theproposal.jpg",
         "shortDescription": "Uma comédia romântica sobre uma executiva canadense que descobre que pode ser deportada dos EUA e persuade seu assistente a se casar com ela.",
@@ -265,7 +265,7 @@
     },
     {
         "title": "O Grande Hotel Budapeste",
-        "releaseDate": { "$date": "2014-03-28T00:00:00.000-0700" },
+        "release": { "$date": "2014-03-28T00:00:00.000-0700" },
         "duration": 99,
         "thumbnailUrl": "https://example.com/grandbudapesthotel.jpg",
         "shortDescription": "Um filme de comédia-drama sobre as aventuras de um lendário concierge em um famoso hotel europeu.",

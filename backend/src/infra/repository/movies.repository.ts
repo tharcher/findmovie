@@ -30,7 +30,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
         embedding: number[],
         matchMovies: Record<string, any>,
     ): Promise<MovieEntity[] | null> {
-        const response = await Movies.aggregate([
+        const combinedResponse = await Movies.aggregate([
             {
                 $vectorSearch: {
                     index: 'embedding',
@@ -43,11 +43,11 @@ class MoviesRepositoryMongoose implements MoviesRepository {
             {
                 $match: {
                     $or: [
-                        { title: new RegExp(matchMovies.title, 'i') },
-                        { directors: new RegExp(matchMovies.directors, 'i') },
-                        { categories: new RegExp(matchMovies.categories, 'i') },
-                        { cast: new RegExp(matchMovies.cast, 'i') },
-                        { longDescription: new RegExp(matchMovies.longDescription, 'i') },
+                        { title: new RegExp(matchMovies.title || '.*', 'i') },
+                        { directors: new RegExp(matchMovies.directors || '.*', 'i') },
+                        { categories: new RegExp(matchMovies.categories || '.*', 'i') },
+                        { cast: new RegExp(matchMovies.cast || '.*', 'i') },
+                        { longDescription: new RegExp(matchMovies.longDescription || '.*', 'i') },
                     ],
                 },
             },
@@ -69,7 +69,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
             },
         ]);
 
-        return response;
+        return combinedResponse;
     }
 
     async update(dto: MovieDto, id: string): Promise<MovieEntity | null> {
