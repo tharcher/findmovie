@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { MovieDto } from "../../app/dto/movieDto";
 import { MoviesRepository } from "../../app/repository/movies.repository";
 import { MovieEntity } from "../../domain/entity/movie.entity";
-import { title } from "process";
 
 const moviesSchema = new mongoose.Schema({
     title: String,
@@ -15,6 +14,7 @@ const moviesSchema = new mongoose.Schema({
     directors: [String],
     cast: [String],
     categories: [String],
+    embedding: [Number],
 });
 
 const Movies = mongoose.model('movies', moviesSchema);
@@ -39,7 +39,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
                     numCandidates: 150,
                     limit: 10,
                 },
-            }, 
+            },
             {
                 $match: {
                     $or: [
@@ -47,7 +47,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
                         { directors: new RegExp(matchMovies.directors, 'i') },
                         { categories: new RegExp(matchMovies.categories, 'i') },
                         { cast: new RegExp(matchMovies.cast, 'i') },
-                        { longDescription: new RegExp(matchMovies.longDescription, 'i') },                        
+                        { longDescription: new RegExp(matchMovies.longDescription, 'i') },
                     ],
                 },
             },
@@ -68,7 +68,7 @@ class MoviesRepositoryMongoose implements MoviesRepository {
                 },
             },
         ]);
-        
+
         return response;
     }
 

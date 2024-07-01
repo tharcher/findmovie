@@ -9,6 +9,7 @@ type MovieEntityProps = {
     directors: string[];
     cast: string[];
     categories: string[];
+    embedding?: number[] | null | undefined;
 
 };
 
@@ -23,6 +24,7 @@ class MovieEntity {
     directors: string[];
     cast: string[];
     categories: string[];
+    embedding?: number[] | null | undefined; 
 
     constructor(props: MovieEntityProps) {
         this.title = props.title;
@@ -35,6 +37,7 @@ class MovieEntity {
         this.directors = props.directors;
         this.cast = props.cast;
         this.categories = props.categories;
+        this.embedding = props.embedding; 
     }
 }
 
