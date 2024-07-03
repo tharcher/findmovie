@@ -21,7 +21,7 @@ export function Tag({title, className}: Props) {
                 color: randomColors().dark
             }}
             className={classNames([
-                'rounded-full bg-opacity-50ext-center w-fit px-3 py-1',
+                'rounded-t bg-opacity-50ext-center w-fit px-3 py-1',
                 className,
             ])}
         >{title}

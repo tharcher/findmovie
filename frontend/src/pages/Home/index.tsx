@@ -58,7 +58,7 @@ export function Home() {
                 </div>
                 <div className="py-7">
                     <p className="text-evergreen font-medium text-2xl">
-                        Qual é o seu gênero preferido de filmes para receber recomendações?
+                        Gostaria de receber recomendações?
                     </p>
                     <Input placeholder="Eu gostaria de assistir..." onKeyDown={(e: any) => {
                         if (e.key === "Enter") {
@@ -67,10 +67,10 @@ export function Home() {
                     }} />
                 </div>
                 <Title title="Filmes recomendados" className="my-5" />
-                <div className="grid md:grid-cols-4 grid-cols-1 gap-16px">
+                <div className="grid md:grid-cols-4 grid-cols-1 gap-16px gap-y-8">
                     {movies.map(movie => {
                         return (                            
-                            <Card id={movie._id} movie={movie} />
+                            <Card key={movie._id} id={movie._id} movie={movie} />
                         );
                     })}
                 </div>

@@ -2,7 +2,8 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { Tag } from "../Tag/Tag";
-import { Movie } from "../../contexts/moviesContext";
+import { Movie, formatDuration } from "../../contexts/moviesContext";
+import { FaClock } from 'react-icons/fa';
 
 type Props = {
     id: string;
@@ -12,12 +13,13 @@ type Props = {
 export function Card({ id, movie }: Props) {
     console.log("Card - movie: ", movie);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const handleSelectedMovie = useCallback(() => {
         navigate(`/${id}`);
-    }, [id, navigate])
+    }, [id, navigate]);
+
     return (
-        <div className="p-2 gap-3 grid grid-cols-3 shadow-lg rounded-lg border border-gray-100 max-w-lg">
+        <div className="relative group p-1 gap-3 grid grid-cols-3 shadow-lg rounded-lg border border-gray-100 max-w-lg">
             <div className="col-span-1">
                 <img
                     src={movie?.thumbnailUrl}
@@ -29,9 +31,9 @@ export function Card({ id, movie }: Props) {
                 <div>
                     <p className="font-bold text-xl text-evergreen">{movie.title}</p>
                     <p className="font-light text-sm text-gray-500 mb-2">Direção: {movie?.directors.join(', ')}</p>
-                    <Tag title={movie?.categories.join(', ')}className="mb-3 text-sm" />
+                    <Tag title={movie?.categories.join(', ')} className="mb-3 text-sm" />
                     {movie.shortDescription && (
-                        <p className="text-justify text-sm">
+                        <p className="text-justify text-sm overflow-y-auto h-full">
                             <strong>Sinopse: </strong>
                             {movie.shortDescription}
                         </p>
@@ -46,6 +48,15 @@ export function Card({ id, movie }: Props) {
                     />
                 </div>
             </div>
+            <div className="absolute top-0 -left-48 w-44 p-2 bg-gray-500 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-start space-y-2 z-10">
+                <div className="flex items-center text-white text-sm">
+                    <FaClock className="mr-1" /> {formatDuration(movie?.duration || 0)}
+                </div>
+                <div className="text-white text-xs">
+                    <strong>Elenco: </strong>
+                    {movie.cast.join(', ')}
+                </div>
+            </div>
         </div>
-    )
+    );
 }
