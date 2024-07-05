@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import { Header } from "../../components/Header/Header";
@@ -12,6 +12,7 @@ const genderMovies = [
     'Ação',
     'Aventura',
     'Comédia',
+    'Romance',
     'Terror',
     'Ficção',
     'Drama',
@@ -21,24 +22,34 @@ const genderMovies = [
 export function Home() {
     const [selectedGender, setSelectedGender] = useState<string[]>([]);
     const { movies, handleSetMovies } = useContext(MoviesContext);
-
-    const handleSelected = useCallback((title: string) => {
-        if (selectedGender.includes(title)) {
-            const removeGender = selectedGender.filter(item => item !== title);
-            setSelectedGender(removeGender);
-        } else {
-            setSelectedGender([...selectedGender, title]);
-        }
-
-    }, [selectedGender]);
+    const [searchValue, setSearchValue] = useState<string>('');
 
     const handleSubmit = useCallback(
-        async (value: string) => {
-            const response = await searchMovies(value);    
+        async (value: string, categories: string[] = []) => {
+            if (!value || value.trim() === "") {
+                console.log("Search value is empty. Skipping search.");
+            }
+            console.log("teste front: ", value, categories);
+            const response = await searchMovies(value, categories);
             handleSetMovies(response);
         },
-        [handleSetMovies],
+        [handleSetMovies]
     );
+
+    const handleSelected = useCallback((title: string) => {
+        setSelectedGender(prevSelectedGender => {
+            let newSelectedGender;
+            if (prevSelectedGender.includes(title)) {
+                newSelectedGender = prevSelectedGender.filter(item => item !== title);
+            } else {
+                newSelectedGender = [...prevSelectedGender, title];
+            }
+
+            // Chamar handleSubmit com o novo estado
+            handleSubmit('', newSelectedGender);
+            return newSelectedGender;
+        });
+    }, [handleSubmit]);
 
     return (
         <div className="mb-6">
@@ -60,16 +71,18 @@ export function Home() {
                     <p className="text-evergreen font-medium text-2xl">
                         Gostaria de receber recomendações?
                     </p>
-                    <Input placeholder="Eu gostaria de assistir..." onKeyDown={(e: any) => {
-                        if (e.key === "Enter") {
-                            handleSubmit(e.target.value);
-                        }
-                    }} />
+                    <Input placeholder="Eu gostaria de assistir..."
+                        onKeyDown={(e: any) => {
+                            if (e.key === "Enter") {
+                                handleSubmit(e.target.value, selectedGender);
+                            }
+                        }}
+                    />
                 </div>
                 <Title title="Filmes recomendados" className="my-5" />
                 <div className="grid md:grid-cols-4 grid-cols-1 gap-16px gap-y-8">
                     {movies.map(movie => {
-                        return (                            
+                        return (
                             <Card key={movie._id} id={movie._id} movie={movie} />
                         );
                     })}

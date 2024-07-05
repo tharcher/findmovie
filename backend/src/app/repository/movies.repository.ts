@@ -8,6 +8,9 @@ abstract class MoviesRepository {
         embedding: number[],
         matchMovies: Record<string, any>,
     ): Promise<MovieEntity[] | null>;    
+    abstract findByCategories(
+        categories: string[],
+    ): Promise<MovieEntity[] | null>;    
     abstract update(dto: MovieDto, id: string): Promise<MovieEntity | null>;
 }
 

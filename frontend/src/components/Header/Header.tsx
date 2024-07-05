@@ -1,6 +1,4 @@
 import backgroundImage from '../../assets/img/bg-header.jpg'
-import searchImage from '../../assets/img/search.png'
-import { Button } from '../Button/Button'
 import { Container } from '../Container/Container'
 import { HeaderTitle } from './HeaderTitle'
 import { Typewriter } from './Typewriter'

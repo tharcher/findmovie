@@ -36,12 +36,24 @@ class MoviesUseCase {
         });
     }
 
-    async searchMovies(search: string) {        
+    async searchMovies(search: string, categories: string[] = []) {
         const generateEmbedding = await generateEmbeddings(search);
-        const searchResponse: AIResponse = await searchEmbeddings(search);
-        const matchMovies = this.matchMovies(searchResponse);
-        
-        return this.moviesRepository.find(search, generateEmbedding, searchResponse);
+
+        console.error('Search: ', categories, search.length);
+        // Se as categorias estiverem definidas, utilize a função de busca por categorias
+        if ((categories[0] != "") && (search.trim() === "" || search.length === 0)) {
+            console.error('Busca por categoria: ', categories);
+            const searchResponse: AIResponse = await searchEmbeddings(search, categories);
+            const matchMovies = this.matchMovies(searchResponse);
+
+            return this.moviesRepository.findByCategories(categories);
+        } else {
+            console.error('Busca global: ', search);
+            const searchResponse: AIResponse = await searchEmbeddings(search);
+            const matchMovies = this.matchMovies(searchResponse);
+
+            return this.moviesRepository.find(search, generateEmbedding, searchResponse);
+        }
     }
 
     async updateMovie(dto: MovieDto, id: string) {
@@ -72,7 +84,7 @@ class MoviesUseCase {
             };
         }
 
-        if(search.directors) {
+        if (search.directors) {
             matchMovies.$match = {
                 directors: search.directors,
             };
@@ -95,7 +107,7 @@ class MoviesUseCase {
                 longDescription: search.longDescription,
             };
         }
-        
+
         return matchMovies;
     }
 }

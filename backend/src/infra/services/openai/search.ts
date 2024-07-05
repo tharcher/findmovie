@@ -2,27 +2,42 @@ import OpenAI from "openai";
 import { HttpException } from "../../../interfaces/HttpException";
 import { AIResponse } from "../../../app/useCases/movies.usecase";
 
-export async function searchEmbeddings(input: string): Promise<AIResponse> {
+export async function searchEmbeddings(input: string, categories: string[] = []): Promise<AIResponse> {
     const openAi = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY,
     });
+
+    let systemContent = `
+        - Realizar a busca em Português, somente.
+        - Não retorne nada fora dos dados fornecidos.
+        - Não invente ou altere nenhuma informação das já mencionadas no banco.
+        - Enviar a resposta no formato JSON.
+        - Lista de categorias: ['Ação', 'Aventura', 'Comédia', 'Terror', 'Ficção', 'Drama', 'Biografia'].        
+        - Formato de saída para o retorno do JSON: { title: string, directors: string, categories: string, cast: string, longDescription: string }
+        - Ordenar por score.
+    `;
+
+    if (categories && categories.length > 0) {
+        systemContent += `
+            - Incluir apenas filmes que tenham no campo categories as categorias: [${categories}].
+            - Não trazer nenhum filme que não tenha as categorias no campo categories.
+            - Realizar a busca somente por categories.
+            - Não altere nenhuma informação.
+        `;
+    } else {
+        systemContent += `
+            - Realizar uma busca por title, directors, categories, cast e longDescription.
+        `;
+    }
+
+    
 
     try {
         const response = await openAi.chat.completions.create({
             messages: [
                 {
                     role: 'system',
-                    content:
-                        `
-                - Não retorne nada fora dos dados fornecidos.
-                - Não acrescente nenhuma informação além das já existentes nos dados fornecidos.
-                - Não invente ou altere nenhuma informação.
-                - Enviar a resposta no formato JSON.
-                - Lista de categorias: ['Ação', 'Aventura', 'Comédia', 'Terror', 'Ficção', 'Drama', 'Biografia'].
-                - Verificar de a mensagem do usuário corresponde a alguma das categorias em portugês ou inglês. Caso não seja, envie a categoria do livre encontrado.
-                - Realizar uma busca por title, directors, categories, cast e longDescription.
-                - Formato de saída para o retorno do JSON: { title: string, directors: string, categories: string, cast: string, longDescription: string }
-                `,
+                    content: systemContent,
                 },
                 {
                     role: 'user',
