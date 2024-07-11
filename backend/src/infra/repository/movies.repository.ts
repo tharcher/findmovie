@@ -81,12 +81,12 @@ class MoviesRepositoryMongoose implements MoviesRepository {
         try {
             const categoryArray = Array.isArray(categories) ? categories : [categories];
 
-            const combinedResponse = await Movies.aggregate([
-                {
-                    $match: {
-                        categories: { $in: categoryArray }, 
-                    },
+        const combinedResponse = await Movies.aggregate([
+            {
+                $match: {
+                    categories: { $all: categoryArray },
                 },
+            },
                 {
                     $project: {
                         _id: 1,

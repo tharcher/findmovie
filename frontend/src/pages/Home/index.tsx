@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import { Header } from "../../components/Header/Header";
@@ -20,36 +20,38 @@ const genderMovies = [
 ]
 
 export function Home() {
-    const [selectedGender, setSelectedGender] = useState<string[]>([]);
+    const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const { movies, handleSetMovies } = useContext(MoviesContext);
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>("");
 
     const handleSubmit = useCallback(
-        async (value: string, categories: string[] = []) => {
-            if (!value || value.trim() === "") {
-                console.log("Search value is empty. Skipping search.");
+        async (value: string, genres: string[] = []) => {
+            try {
+                const response = await searchMovies(value, genres);
+                handleSetMovies(response);
+            } catch (error) {
+                console.error('Erro ao buscar filmes:', error);
+                handleSetMovies([]);
             }
-            console.log("teste front: ", value, categories);
-            const response = await searchMovies(value, categories);
-            handleSetMovies(response);
         },
         [handleSetMovies]
     );
 
-    const handleSelected = useCallback((title: string) => {
-        setSelectedGender(prevSelectedGender => {
-            let newSelectedGender;
-            if (prevSelectedGender.includes(title)) {
-                newSelectedGender = prevSelectedGender.filter(item => item !== title);
-            } else {
-                newSelectedGender = [...prevSelectedGender, title];
-            }
+    const handleSelected = useCallback((genre: string) => {
+        setSelectedGenres(prevSelectedGenres => {
+            const isSelected = prevSelectedGenres.includes(genre);
+            const newSelectedGenres = isSelected
+                ? prevSelectedGenres.filter(item => item !== genre)
+                : [...prevSelectedGenres, genre];
 
-            // Chamar handleSubmit com o novo estado
-            handleSubmit('', newSelectedGender);
-            return newSelectedGender;
+            handleSubmit(searchValue, newSelectedGenres);
+            return newSelectedGenres;
         });
-    }, [handleSubmit]);
+    }, [handleSubmit, searchValue]);
+
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value);
+    }, []);
 
     return (
         <div className="mb-6">
@@ -57,12 +59,12 @@ export function Home() {
             <Container>
                 <Title title="O que você deseja assistir hoje?" />
                 <div className="md:gap-x-5 gap-x-3 grid md:grid-cols-8 grid-cols-4 my-6 gap-y-1">
-                    {genderMovies.map((movie, index) => (
+                    {genderMovies.map((genre, index) => (
                         <Button
                             key={index}
-                            title={movie}
-                            variant={selectedGender.includes(movie) ? 'dark' : 'light'}
-                            onClick={() => handleSelected(movie)}
+                            title={genre}
+                            variant={selectedGenres.includes(genre) ? 'dark' : 'light'}
+                            onClick={() => handleSelected(genre)}
                             className="hover:scale-125 transform transition-transform duration-300 ease-in-out"
                         />
                     ))}
@@ -71,21 +73,26 @@ export function Home() {
                     <p className="text-evergreen font-medium text-2xl">
                         Gostaria de receber recomendações?
                     </p>
-                    <Input placeholder="Eu gostaria de assistir..."
-                        onKeyDown={(e: any) => {
+                    <Input
+                        placeholder="Eu gostaria de assistir..."
+                        value={searchValue}
+                        onChange={handleInputChange}
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                             if (e.key === "Enter") {
-                                handleSubmit(e.target.value, selectedGender);
+                                handleSubmit(searchValue, selectedGenres);
                             }
                         }}
                     />
                 </div>
                 <Title title="Filmes recomendados" className="my-5" />
                 <div className="grid md:grid-cols-4 grid-cols-1 gap-16px gap-y-8">
-                    {movies.map(movie => {
-                        return (
-                            <Card key={movie._id} id={movie._id} movie={movie} />
-                        );
-                    })}
+                    {movies && movies.length > 0 ? (
+                        movies.map(movie => (
+                            <Card id={movie._id} movie={movie} key={movie._id}/>
+                        ))
+                    ) : (
+                        <p>Nenhum filme encontrado.</p>
+                    )}
                 </div>
             </Container>
         </div>

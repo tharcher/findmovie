@@ -12,7 +12,7 @@ export async function searchEmbeddings(input: string, categories: string[] = [])
         - Não retorne nada fora dos dados fornecidos.
         - Não invente ou altere nenhuma informação das já mencionadas no banco.
         - Enviar a resposta no formato JSON.
-        - Lista de categorias: ['Ação', 'Aventura', 'Comédia', 'Terror', 'Ficção', 'Drama', 'Biografia'].        
+        - Lista de categorias: ['Ação', 'Aventura', 'Comédia', 'Romance', 'Terror', 'Ficção', 'Drama', 'Biografia'].        
         - Formato de saída para o retorno do JSON: { title: string, directors: string, categories: string, cast: string, longDescription: string }
         - Ordenar por score.
     `;
